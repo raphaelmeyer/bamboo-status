@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+service Blinkt {
+
+  rpc SetPixel(Pixel) returns (Response) {}
+
+  rpc Clear(google.protobuf.Empty) returns (Response)  {}
+
+  rpc Show(google.protobuf.Empty) returns (Response) {}
+}
+
+message Color {
+  uint32 r = 1;
+  uint32 g = 2;
+  uint32 b = 3;
+}
+
+message Pixel {
+  uint32 index = 1;
+
+  enum Brightness {
+    Off = 0;
+    Low = 1;
+    Medium = 2;
+    Bright = 3;
+    Maximum = 4;
+  }
+
+  Brightness brightness = 2;
+  Color color = 3;
+}
+
+message Response {
+  enum Result {
+    Failure = 0;
+    Success = 1;
+  }
+  Result result = 1;
+}
