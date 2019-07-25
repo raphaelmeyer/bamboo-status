@@ -1,11 +1,12 @@
 package bamboo
 
 import (
-	"bufio"
 	"encoding/json"
 	"fmt"
+	"golang.org/x/crypto/ssh/terminal"
 	"io/ioutil"
 	"os"
+	"syscall"
 )
 
 type configuration struct {
@@ -37,9 +38,11 @@ func readConfig(filename string) (configuration, error) {
 
 func getPassword(username string) (string, error) {
 	fmt.Printf("Password for user %v: ", username)
-	scanner := bufio.NewScanner(os.Stdin)
-	if !scanner.Scan() {
-		return "", fmt.Errorf("Missing input")
+	password, err := terminal.ReadPassword(syscall.Stdin)
+	fmt.Println()
+	if err != nil {
+		return "", err
 	}
-	return scanner.Text(), nil
+
+	return string(password), nil
 }

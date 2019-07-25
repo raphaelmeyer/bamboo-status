@@ -30,17 +30,17 @@ const (
 func (state LedState) toPixel(i uint32) *Pixel {
 	switch state {
 	case Red:
-		return &Pixel{Index: i, Brightness: Pixel_Medium, Color: &Color{R: 255, G: 0, B: 0}}
+		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 255, G: 0, B: 0}}
 	case Green:
-		return &Pixel{Index: i, Brightness: Pixel_Medium, Color: &Color{R: 0, G: 127, B: 0}}
+		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 0, G: 127, B: 0}}
 	case Blue:
-		return &Pixel{Index: i, Brightness: Pixel_Medium, Color: &Color{R: 0, G: 0, B: 127}}
+		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 0, G: 0, B: 127}}
 	case Yellow:
-		return &Pixel{Index: i, Brightness: Pixel_Medium, Color: &Color{R: 127, G: 127, B: 0}}
+		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 127, G: 127, B: 0}}
 	case Purple:
-		return &Pixel{Index: i, Brightness: Pixel_Medium, Color: &Color{R: 127, G: 0, B: 127}}
+		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 127, G: 0, B: 127}}
 	case Cyan:
-		return &Pixel{Index: i, Brightness: Pixel_Medium, Color: &Color{R: 0, G: 127, B: 127}}
+		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 0, G: 127, B: 127}}
 	case Off:
 		return &Pixel{Index: i, Brightness: Pixel_Off, Color: &Color{R: 0, G: 0, B: 0}}
 	}
