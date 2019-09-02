@@ -1,8 +1,8 @@
 package blinkt
 
 import (
+	"bamboo/internal/pkg/blinktv1"
 	"context"
-	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/grpc"
 	"time"
 )
@@ -12,7 +12,7 @@ const (
 )
 
 type Blinkt struct {
-	client BlinktClient
+	client blinktv1.BlinktAPIClient
 }
 
 type LedState uint
@@ -27,22 +27,22 @@ const (
 	Off
 )
 
-func (state LedState) toPixel(i uint32) *Pixel {
+func (state LedState) toPixel(i uint32) *blinktv1.SetPixelRequest {
 	switch state {
 	case Red:
-		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 255, G: 0, B: 0}}
+		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 255, G: 0, B: 0}}
 	case Green:
-		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 0, G: 127, B: 0}}
+		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 0, G: 127, B: 0}}
 	case Blue:
-		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 0, G: 0, B: 127}}
+		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 0, G: 0, B: 127}}
 	case Yellow:
-		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 127, G: 127, B: 0}}
+		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 127, G: 127, B: 0}}
 	case Purple:
-		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 127, G: 0, B: 127}}
+		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 127, G: 0, B: 127}}
 	case Cyan:
-		return &Pixel{Index: i, Brightness: Pixel_Low, Color: &Color{R: 0, G: 127, B: 127}}
+		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 0, G: 127, B: 127}}
 	case Off:
-		return &Pixel{Index: i, Brightness: Pixel_Off, Color: &Color{R: 0, G: 0, B: 0}}
+		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 0, G: 0, B: 0}}
 	}
 	return nil
 }
@@ -52,7 +52,7 @@ func NewBlinkt() (*Blinkt, func(), error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	client := NewBlinktClient(conn)
+	client := blinktv1.NewBlinktAPIClient(conn)
 	close := func() {
 		conn.Close()
 	}
@@ -64,12 +64,12 @@ func (bt *Blinkt) Clear() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 
-	_, err := bt.client.Clear(ctx, &empty.Empty{})
+	_, err := bt.client.Clear(ctx, &blinktv1.ClearRequest{})
 	if err != nil {
 		return err
 	}
 
-	_, err = bt.client.Show(ctx, &empty.Empty{})
+	_, err = bt.client.Show(ctx, &blinktv1.ShowRequest{})
 	if err != nil {
 		return err
 	}
@@ -86,7 +86,7 @@ func (bt *Blinkt) SetLed(index uint32, state LedState) error {
 		return err
 	}
 
-	_, err = bt.client.Show(ctx, &empty.Empty{})
+	_, err = bt.client.Show(ctx, &blinktv1.ShowRequest{})
 	if err != nil {
 		return err
 	}

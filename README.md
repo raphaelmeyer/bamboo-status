@@ -22,3 +22,7 @@ Create a config file `config.json`.
 Start [blinktd](https://github.com/raphaelmeyer/blinktd) daemon.
 
 Execute `bamboo-status` from the working directory that contains `config.json`.
+
+## Rebuild gRPC client
+
+    go generate ./...
