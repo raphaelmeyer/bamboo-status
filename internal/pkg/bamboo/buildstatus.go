@@ -34,6 +34,7 @@ func Run(done <-chan bool) error {
 	}
 
 	for {
+		bt.SetLed(0, blinkt.White)
 		for i, plan := range config.BuildPlans {
 			result, err := bamboo.Status(plan)
 

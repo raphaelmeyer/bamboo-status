@@ -24,23 +24,26 @@ const (
 	Yellow
 	Purple
 	Cyan
+	White
 	Off
 )
 
 func (state LedState) toPixel(i uint32) *blinktv1.SetPixelRequest {
 	switch state {
 	case Red:
-		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 255, G: 0, B: 0}}
+		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 191, G: 0, B: 0}}
 	case Green:
 		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 0, G: 127, B: 0}}
 	case Blue:
 		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 0, G: 0, B: 127}}
 	case Yellow:
-		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 127, G: 127, B: 0}}
+		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 191, G: 127, B: 0}}
 	case Purple:
 		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 127, G: 0, B: 127}}
 	case Cyan:
 		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 0, G: 127, B: 127}}
+	case White:
+		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 127, G: 127, B: 127}}
 	case Off:
 		return &blinktv1.SetPixelRequest{Index: i, Brightness: blinktv1.Brightness_BRIGHTNESS_LOW, Color: &blinktv1.Color{R: 0, G: 0, B: 0}}
 	}
