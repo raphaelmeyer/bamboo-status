@@ -18,9 +18,10 @@ const (
 )
 
 type Result struct {
-	Plan  string
-	Build uint
-	State BuildState
+	Plan     string
+	Build    uint
+	State    BuildState
+	Previous BuildState
 }
 
 func (bs BuildState) String() string {
@@ -75,8 +76,9 @@ func (b *Bamboo) createUri(plan string) (string, error) {
 
 	query := url.Values{}
 	query.Set("os_authType", "basic")
-	query.Set("expand", "results[0]")
+	query.Set("expand", "results")
 	query.Set("includeAllStates", "true")
+	query.Set("max-results", "2")
 
 	uri.RawQuery = query.Encode()
 
@@ -131,11 +133,18 @@ func parseResponse(response string) (*Result, error) {
 		return nil, err
 	}
 
+	prevState := Building
+	if len(parsed.Results.Result) > 1 {
+		prev := parsed.Results.Result[1]
+		prevState = evaluate(prev.State)
+	}
+
 	last := parsed.Results.Result[0]
 	result := &Result{
-		Plan:  last.Plan.Key,
-		Build: last.Build,
-		State: evaluate(last.State),
+		Plan:     last.Plan.Key,
+		Build:    last.Build,
+		State:    evaluate(last.State),
+		Previous: prevState,
 	}
 
 	return result, nil

@@ -44,7 +44,14 @@ func Run(done <-chan bool) error {
 			} else if result.State == Success {
 				bt.SetLed(uint32(i), blinkt.Green)
 			} else if result.State == Building {
-				bt.SetLed(uint32(i), blinkt.Cyan)
+				switch result.Previous {
+				case Success:
+					bt.SetLed(uint32(i), blinkt.Cyan)
+				case Failure:
+					bt.SetLed(uint32(i), blinkt.Purple)
+				case Building:
+					bt.SetLed(uint32(i), blinkt.Blue)
+				}
 			} else {
 				bt.SetLed(uint32(i), blinkt.Red)
 			}
