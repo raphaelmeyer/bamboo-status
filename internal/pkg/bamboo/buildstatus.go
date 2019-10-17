@@ -58,5 +58,4 @@ func Run(done <-chan bool) error {
 		}
 	}
 
-	return nil
 }
