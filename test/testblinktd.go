@@ -8,7 +8,7 @@ import (
 
 	"google.golang.org/grpc"
 
-	"github.com/mweb/console-blinktd/internal/pkg/blinktv1"
+	"bamboo/internal/pkg/blinktv1"
 )
 
 func main() {
