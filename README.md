@@ -1,6 +1,6 @@
 # bamboo-status
 
-[![Build Status](https://travis-ci.org/raphaelmeyer/bamboo-status.svg?branch=master)](https://travis-ci.org/raphaelmeyer/bamboo-status)
+[![Build Status](https://travis-ci.com/raphaelmeyer/bamboo-status.svg?branch=master)](https://travis-ci.com/raphaelmeyer/bamboo-status)
 
 Visualize Bamboo Build Results with [blinktd](https://github.com/raphaelmeyer/blinktd).
 
